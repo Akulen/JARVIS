@@ -95,7 +95,7 @@ bot.addListener('message', function (from, to, message) {
 					{
 						autoKick.splice(autoKick.indexOf(command[1]), 1);
 					}
-					if(command.length == 1 && command[0] == "clearkick")
+					if((command.length == 1 || command[1] == "") && command[0] == "clearkick")
 					{
 						autoKick = new Array();
 					}
