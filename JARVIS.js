@@ -20,7 +20,7 @@ var config = {
 	channels: ["#frioi", "#botfrioi"],
 	server: "irc.freenode.net",
 	botName: "_JARVIS_",
-	password: "mdp"
+	password: process.argv[2]
 };
 var op = new Array(
 	"rigauxt",
@@ -82,18 +82,22 @@ bot.addListener('message', function (from, to, message) {
 					{
 						bot.send('MODE', to, '-v', command[1]);
 					}
-					if(command.length > 1 && command[0] == "autokick" && command[1] != config.botName && !op.contains(command[1]))
+					if(command.length > 1 && command[0] == "autokick" && command[1] != config.botName && !op.contains(command[1]) && !autoKick.contains(command[1]) && command[1] != "")
 					{
 						autoKick.push(command[1]);
 						bot.send('kick', to, command[1]);
 					}
-					if(command.length == 1 && command[0] == "autokick")
+					if((command.length == 1 || command[1] == "") && command[0] == "autokick")
 					{
 						bot.say(to, autoKick);
 					}
 					if(command.length > 1 && command[0] == "stopkick" && autoKick.contains(command[1]))
 					{
 						autoKick.splice(autoKick.indexOf(command[1]), 1);
+					}
+					if(command.length == 1 && command[0] == "clearkick")
+					{
+						autoKick = new Array();
 					}
 				}
 			}
